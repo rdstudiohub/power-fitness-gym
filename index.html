@@ -1,0 +1,1340 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Power Fitness Gym - Riyadh</title>
+    <meta name="description" content="Power Fitness Gym in Riyadh, Saudi Arabia - Transform your body with modern equipment, certified trainers, and result-focused training.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        /* ============ CSS RESET & BASE ============ */
+        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; scroll-padding-top: 80px; }
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #0a0a0a;
+            color: #e0e0e0;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+        h1, h2, h3, h4, h5, h6 { font-family: 'Bebas Neue', sans-serif; letter-spacing: 1px; }
+        a { text-decoration: none; color: inherit; }
+        ul { list-style: none; }
+        img { max-width: 100%; display: block; }
+        .container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
+
+        /* ============ COLORS ============ */
+        :root {
+            --black: #0a0a0a;
+            --dark: #111111;
+            --darker: #1a1a1a;
+            --red: #DC2626;
+            --red-hover: #b91c1c;
+            --gold: #D4A84B;
+            --gold-hover: #b8903a;
+            --white: #ffffff;
+            --gray: #999;
+            --light-gray: #ccc;
+            --whatsapp: #25D366;
+            --whatsapp-hover: #1da851;
+        }
+
+        /* ============ LOADING SPINNER ============ */
+        #loading-screen {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: #0a0a0a; z-index: 99999;
+            display: flex; align-items: center; justify-content: center;
+            transition: opacity 0.5s ease, visibility 0.5s ease;
+        }
+        #loading-screen.hidden { opacity: 0; visibility: hidden; pointer-events: none; }
+        .spinner {
+            width: 60px; height: 60px;
+            border: 4px solid rgba(220, 38, 38, 0.2);
+            border-top-color: var(--red);
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+        }
+        @keyframes spin { to { transform: rotate(360deg); } }
+
+        /* ============ SCROLL REVEAL ============ */
+        .reveal {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: opacity 0.8s ease, transform 0.8s ease;
+        }
+        .reveal.visible { opacity: 1; transform: translateY(0); }
+        .reveal-left { opacity: 0; transform: translateX(-50px); transition: opacity 0.8s ease, transform 0.8s ease; }
+        .reveal-left.visible { opacity: 1; transform: translateX(0); }
+        .reveal-right { opacity: 0; transform: translateX(50px); transition: opacity 0.8s ease, transform 0.8s ease; }
+        .reveal-right.visible { opacity: 1; transform: translateX(0); }
+        .reveal-scale { opacity: 0; transform: scale(0.85); transition: opacity 0.8s ease, transform 0.8s ease; }
+        .reveal-scale.visible { opacity: 1; transform: scale(1); }
+
+        /* ============ NAVBAR ============ */
+        .navbar {
+            position: fixed; top: 0; left: 0; width: 100%; z-index: 10000;
+            padding: 15px 0;
+            transition: all 0.4s ease;
+            background: transparent;
+        }
+        .navbar.scrolled {
+            background: rgba(10, 10, 10, 0.95);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 2px 20px rgba(0,0,0,0.5);
+            padding: 10px 0;
+        }
+        .navbar .container {
+            display: flex; align-items: center; justify-content: space-between;
+        }
+        .nav-logo {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 28px; color: var(--white);
+            letter-spacing: 2px;
+            display: flex; align-items: center; gap: 8px;
+        }
+        .nav-logo span { color: var(--red); }
+        .nav-logo i { color: var(--gold); font-size: 24px; }
+        .nav-links { display: flex; gap: 30px; align-items: center; }
+        .nav-links a {
+            font-family: 'Inter', sans-serif;
+            font-size: 14px; font-weight: 600;
+            color: var(--light-gray); text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: color 0.3s ease;
+            position: relative;
+        }
+        .nav-links a::after {
+            content: ''; position: absolute; bottom: -4px; left: 0;
+            width: 0; height: 2px; background: var(--red);
+            transition: width 0.3s ease;
+        }
+        .nav-links a:hover { color: var(--white); }
+        .nav-links a:hover::after { width: 100%; }
+        .nav-links a.active { color: var(--red); }
+        .nav-links a.active::after { width: 100%; }
+        .hamburger {
+            display: none; cursor: pointer; background: none; border: none;
+            flex-direction: column; gap: 5px; padding: 5px; z-index: 10001;
+        }
+        .hamburger span {
+            display: block; width: 28px; height: 3px;
+            background: var(--white); border-radius: 3px;
+            transition: all 0.3s ease;
+        }
+        .hamburger.active span:nth-child(1) { transform: rotate(45deg) translate(5px, 6px); }
+        .hamburger.active span:nth-child(2) { opacity: 0; }
+        .hamburger.active span:nth-child(3) { transform: rotate(-45deg) translate(5px, -6px); }
+
+        /* ============ HERO ============ */
+        .hero {
+            position: relative; width: 100%; height: 100vh; min-height: 700px;
+            display: flex; align-items: center; justify-content: center;
+            overflow: hidden;
+        }
+        .hero-video {
+            position: absolute; top: 0; left: 0;
+            width: 100%; height: 100%; object-fit: cover;
+            background: #000;
+        }
+        .hero-overlay {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            background: linear-gradient(135deg, rgba(0,0,0,0.85) 0%, rgba(10,10,10,0.75) 40%, rgba(220,38,38,0.15) 100%);
+            z-index: 1;
+        }
+        .hero-content {
+            position: relative; z-index: 2; text-align: center;
+            max-width: 850px; padding: 0 20px;
+        }
+        .hero-badge {
+            display: inline-block; background: rgba(220, 38, 38, 0.2);
+            border: 1px solid var(--red); color: var(--red);
+            padding: 8px 20px; border-radius: 50px;
+            font-size: 13px; font-weight: 700; letter-spacing: 2px;
+            margin-bottom: 25px; text-transform: uppercase;
+        }
+        .hero-title {
+            font-size: clamp(42px, 8vw, 80px);
+            line-height: 1.05; color: var(--white); margin-bottom: 20px;
+        }
+        .hero-title .line1 { display: block; }
+        .hero-title .line2 { display: block; color: var(--red); }
+        .hero-subtitle {
+            font-size: clamp(15px, 2vw, 18px);
+            color: var(--light-gray); max-width: 600px;
+            margin: 0 auto 35px; line-height: 1.7;
+        }
+        .hero-buttons { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
+        .btn { 
+            display: inline-flex; align-items: center; gap: 8px;
+            padding: 16px 36px; border-radius: 4px;
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 18px; font-weight: 700; letter-spacing: 2px;
+            cursor: pointer; border: none; text-transform: uppercase;
+            transition: all 0.3s ease;
+        }
+        .btn-gold {
+            background: var(--gold); color: #0a0a0a;
+        }
+        .btn-gold:hover {
+            background: var(--gold-hover); transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(212, 168, 75, 0.3);
+        }
+        .btn-red {
+            background: var(--red); color: var(--white);
+        }
+        .btn-red:hover {
+            background: var(--red-hover); transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(220, 38, 38, 0.3);
+        }
+        .btn-outline {
+            background: transparent; color: var(--white);
+            border: 2px solid var(--white);
+        }
+        .btn-outline:hover {
+            background: var(--white); color: #0a0a0a; transform: translateY(-2px);
+        }
+
+        /* ============ TICKER ============ */
+        .ticker-wrap {
+            position: relative; z-index: 3;
+            background: rgba(10,10,10,0.9); border-top: 1px solid rgba(212,168,75,0.2);
+            border-bottom: 1px solid rgba(212,168,75,0.2);
+            overflow: hidden; padding: 12px 0;
+        }
+        .ticker {
+            display: flex; gap: 0; white-space: nowrap;
+            animation: ticker-scroll 25s linear infinite;
+        }
+        .ticker span {
+            font-family: 'Inter', sans-serif;
+            font-size: 14px; font-weight: 600; color: var(--gold);
+            letter-spacing: 1px; padding-right: 40px;
+        }
+        @keyframes ticker-scroll {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
+        }
+
+        /* ============ SECTION COMMON ============ */
+        section { padding: 100px 0; position: relative; }
+        .section-header { text-align: center; margin-bottom: 60px; }
+        .section-tag {
+            display: inline-block; color: var(--red);
+            font-size: 14px; font-weight: 700; letter-spacing: 3px;
+            text-transform: uppercase; margin-bottom: 12px;
+        }
+        .section-title {
+            font-size: clamp(36px, 6vw, 56px);
+            color: var(--white); line-height: 1.15;
+            margin-bottom: 15px;
+        }
+        .section-title span { color: var(--gold); }
+        .section-divider {
+            width: 80px; height: 3px; background: var(--red);
+            margin: 0 auto 20px;
+        }
+        .section-desc {
+            max-width: 650px; margin: 0 auto;
+            color: var(--gray); font-size: 16px; line-height: 1.7;
+        }
+        .bg-dark { background: #0a0a0a; }
+        .bg-darker { background: #111111; }
+        .bg-black { background: #000; }
+
+        /* ============ ABOUT ============ */
+        #about { background: #111111; }
+        .about-cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 30px; }
+        .about-card {
+            background: #1a1a1a; border: 1px solid #222;
+            border-top: 3px solid var(--gold);
+            padding: 40px 30px; text-align: center;
+            border-radius: 6px;
+            transition: all 0.3s ease;
+        }
+        .about-card:hover { transform: translateY(-8px); box-shadow: 0 15px 40px rgba(0,0,0,0.4); border-color: var(--gold); }
+        .about-card .icon-wrap {
+            width: 70px; height: 70px; border-radius: 50%;
+            background: rgba(212, 168, 75, 0.1);
+            display: flex; align-items: center; justify-content: center;
+            margin: 0 auto 20px;
+        }
+        .about-card .icon-wrap i {
+            font-size: 30px; color: var(--gold);
+        }
+        .about-card h3 {
+            font-size: 24px; color: var(--white); margin-bottom: 10px;
+        }
+        .about-card p {
+            font-size: 14px; color: var(--gray); line-height: 1.6;
+        }
+
+        /* ============ PACKAGES ============ */
+        #packages { background: #0a0a0a; }
+        .package-cards {
+            display: grid; grid-template-columns: repeat(3, 1fr); gap: 30px;
+            align-items: stretch;
+        }
+        .package-card {
+            background: #1a1a1a; border: 1px solid #222;
+            border-radius: 8px; padding: 40px 30px;
+            text-align: center; position: relative;
+            transition: all 0.4s ease;
+        }
+        .package-card:hover { transform: translateY(-10px); box-shadow: 0 20px 50px rgba(0,0,0,0.5); }
+        .package-card.popular {
+            transform: scale(1.05);
+            border: 2px solid var(--gold);
+            background: #1e1e1e;
+            z-index: 2;
+        }
+        .package-card.popular:hover { transform: scale(1.05) translateY(-10px); }
+        .popular-badge {
+            position: absolute; top: -15px; left: 50%; transform: translateX(-50%);
+            background: var(--red); color: var(--white);
+            padding: 6px 20px; border-radius: 50px;
+            font-size: 12px; font-weight: 700; letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+        .package-name {
+            font-size: 22px; color: var(--white); margin-bottom: 8px;
+        }
+        .package-price {
+            font-size: 48px; color: var(--gold); margin-bottom: 5px;
+            font-family: 'Bebas Neue', sans-serif; letter-spacing: 1px;
+        }
+        .package-price span {
+            font-size: 18px; color: var(--gray); font-family: 'Inter', sans-serif;
+        }
+        .package-desc {
+            font-size: 13px; color: var(--gray); margin-bottom: 25px;
+        }
+        .package-features { text-align: left; margin-bottom: 30px; }
+        .package-features li {
+            padding: 10px 0; border-bottom: 1px solid #222;
+            font-size: 14px; color: var(--light-gray);
+            display: flex; align-items: center; gap: 10px;
+        }
+        .package-features li i { color: var(--gold); font-size: 14px; }
+        .package-features li:last-child { border-bottom: none; }
+        .package-card .btn-red { width: 100%; justify-content: center; }
+
+        /* ============ EXERCISES ============ */
+        #exercises { background: #111111; }
+        .exercise-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 25px; }
+        .exercise-card {
+            background: #1a1a1a; border: 1px solid #222;
+            border-radius: 8px; padding: 35px 25px; text-align: center;
+            transition: all 0.3s ease; cursor: pointer;
+        }
+        .exercise-card:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 15px 35px rgba(0,0,0,0.4);
+            border-color: var(--red);
+        }
+        .exercise-card .ex-icon {
+            width: 60px; height: 60px; border-radius: 50%;
+            background: rgba(220, 38, 38, 0.1);
+            display: flex; align-items: center; justify-content: center;
+            margin: 0 auto 18px;
+        }
+        .exercise-card .ex-icon i { font-size: 26px; color: var(--red); }
+        .exercise-card h3 { font-size: 20px; color: var(--white); margin-bottom: 10px; }
+        .exercise-card p { font-size: 13px; color: var(--gray); line-height: 1.6; margin-bottom: 15px; }
+        .ex-link {
+            font-size: 13px; font-weight: 700; color: var(--gold);
+            text-transform: uppercase; letter-spacing: 1px;
+            transition: color 0.3s ease;
+        }
+        .ex-link i { margin-left: 5px; font-size: 11px; transition: transform 0.3s ease; }
+        .exercise-card:hover .ex-link i { transform: translateX(4px); }
+
+        /* ============ CLASSES ============ */
+        #classes { background: #0a0a0a; }
+        .class-cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 25px; }
+        .class-card {
+            background: #1a1a1a; border-left: 4px solid var(--red);
+            border-radius: 0 8px 8px 0; padding: 30px 25px;
+            transition: all 0.3s ease;
+        }
+        .class-card:hover { transform: translateX(6px); box-shadow: 0 10px 30px rgba(0,0,0,0.4); border-left-color: var(--gold); }
+        .class-time {
+            font-size: 32px; color: var(--gold);
+            font-family: 'Bebas Neue', sans-serif; letter-spacing: 2px;
+            margin-bottom: 5px;
+        }
+        .class-name {
+            font-size: 20px; color: var(--white); margin-bottom: 8px;
+        }
+        .class-desc {
+            font-size: 13px; color: var(--gray); line-height: 1.5;
+        }
+        .class-card.booking { border-left-color: var(--gold); }
+        .class-card.booking .class-time { font-size: 18px; font-family: 'Inter', sans-serif; font-weight: 700; }
+
+        /* ============ TRAINERS ============ */
+        #trainers { background: #111111; }
+        .trainer-cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 30px; }
+        .trainer-card {
+            background: #1a1a1a; border: 1px solid #222;
+            border-radius: 8px; padding: 40px 30px; text-align: center;
+            transition: all 0.3s ease;
+        }
+        .trainer-card:hover { transform: translateY(-8px); box-shadow: 0 15px 40px rgba(0,0,0,0.4); border-color: var(--red); }
+        .trainer-avatar {
+            width: 110px; height: 110px; border-radius: 50%;
+            margin: 0 auto 20px;
+            background: linear-gradient(135deg, #222, #333);
+            border: 3px solid var(--gold);
+            display: flex; align-items: center; justify-content: center;
+        }
+        .trainer-avatar i { font-size: 44px; color: var(--gold); }
+        .trainer-card h3 { font-size: 24px; color: var(--white); margin-bottom: 5px; }
+        .trainer-specialty { font-size: 14px; color: var(--red); font-weight: 600; margin-bottom: 8px; }
+        .trainer-exp {
+            font-size: 12px; color: var(--gold); font-weight: 600;
+            letter-spacing: 1px; margin-bottom: 18px;
+        }
+        .trainer-card .btn-outline {
+            padding: 10px 24px; font-size: 14px;
+        }
+
+        /* ============ VIDEO SCROLL ============ */
+        #videos { background: #0a0a0a; padding-top: 100px; padding-bottom: 100px; }
+        .video-scroll-wrap { overflow-x: auto; scroll-snap-type: x mandatory; -webkit-overflow-scrolling: touch; padding-bottom: 10px; }
+        .video-scroll-wrap::-webkit-scrollbar { height: 6px; }
+        .video-scroll-wrap::-webkit-scrollbar-track { background: #1a1a1a; border-radius: 3px; }
+        .video-scroll-wrap::-webkit-scrollbar-thumb { background: var(--red); border-radius: 3px; }
+        .video-scroll {
+            display: flex; gap: 25px; padding: 0 20px;
+            width: max-content;
+        }
+        .video-card {
+            scroll-snap-align: start; min-width: 320px;
+            height: 220px; background: #1a1a1a;
+            border-radius: 8px; position: relative;
+            overflow: hidden; cursor: pointer;
+            border: 1px solid #222;
+            transition: all 0.3s ease;
+        }
+        .video-card:hover { border-color: var(--red); transform: scale(1.02); }
+        .video-placeholder {
+            width: 100%; height: 100%;
+            background: linear-gradient(135deg, #1a1a1a 0%, #222 100%);
+            display: flex; flex-direction: column;
+            align-items: center; justify-content: center;
+        }
+        .video-placeholder .play-icon {
+            width: 50px; height: 50px; border-radius: 50%;
+            background: rgba(220, 38, 38, 0.3);
+            display: flex; align-items: center; justify-content: center;
+            margin-bottom: 10px;
+        }
+        .video-placeholder .play-icon i { font-size: 18px; color: var(--white); }
+        .video-placeholder p {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 18px; color: var(--white); letter-spacing: 2px;
+        }
+
+        /* ============ GALLERY ============ */
+        #gallery { background: #111111; }
+        .gallery-scroll-wrap { overflow-x: auto; scroll-snap-type: x mandatory; padding-bottom: 10px; }
+        .gallery-scroll-wrap::-webkit-scrollbar { height: 6px; }
+        .gallery-scroll-wrap::-webkit-scrollbar-track { background: #1a1a1a; border-radius: 3px; }
+        .gallery-scroll-wrap::-webkit-scrollbar-thumb { background: var(--gold); border-radius: 3px; }
+        .gallery-scroll { display: flex; gap: 20px; padding: 0 20px; }
+        .gallery-item {
+            scroll-snap-align: start; min-width: 280px;
+            height: 200px; border-radius: 8px;
+            display: flex; align-items: flex-end; padding: 20px;
+            position: relative; overflow: hidden;
+            cursor: pointer; transition: all 0.3s ease;
+        }
+        .gallery-item:hover { transform: scale(1.03); }
+        .gallery-item .gallery-label {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 18px; color: var(--white); letter-spacing: 2px;
+            background: rgba(0,0,0,0.6); padding: 6px 14px; border-radius: 4px;
+            position: relative; z-index: 2;
+        }
+        .gallery-bg-1 { background: linear-gradient(135deg, #1a1a1a, #2d1a1a); }
+        .gallery-bg-2 { background: linear-gradient(135deg, #1a1a2d, #1a1a1a); }
+        .gallery-bg-3 { background: linear-gradient(135deg, #2d1a1a, #1a1a1a); }
+        .gallery-bg-4 { background: linear-gradient(135deg, #1a2d1a, #1a1a1a); }
+        .gallery-bg-5 { background: linear-gradient(135deg, #2d2d1a, #1a1a1a); }
+        .gallery-bg-6 { background: linear-gradient(135deg, #1a1a2d, #2d1a1a); }
+
+        /* ============ TRANSFORMATION ============ */
+        #transformation { background: #0a0a0a; }
+        .transform-content { text-align: center; max-width: 800px; margin: 0 auto 50px; }
+        .transform-title {
+            font-size: clamp(32px, 6vw, 52px); color: var(--white);
+            line-height: 1.15; margin-bottom: 20px;
+        }
+        .transform-title span { color: var(--red); }
+        .transform-text {
+            font-size: 16px; color: var(--gray); line-height: 1.7; margin-bottom: 30px;
+        }
+        .transform-cards { display: grid; grid-template-columns: repeat(2, 1fr); gap: 30px; max-width: 800px; margin: 0 auto; }
+        .transform-card {
+            background: #1a1a1a; border: 1px solid #222;
+            border-radius: 8px; padding: 30px; text-align: center;
+        }
+        .transform-badge {
+            display: inline-block; padding: 6px 18px; border-radius: 4px;
+            font-size: 14px; font-weight: 700; letter-spacing: 2px;
+            margin-bottom: 15px; text-transform: uppercase;
+        }
+        .transform-badge.before { background: rgba(220,38,38,0.15); color: var(--red); }
+        .transform-badge.after { background: rgba(212,168,75,0.15); color: var(--gold); }
+        .transform-placeholder {
+            width: 100%; height: 200px; border-radius: 6px;
+            background: linear-gradient(135deg, #1f1f1f, #2a2a2a);
+            display: flex; align-items: center; justify-content: center;
+            margin-bottom: 15px;
+        }
+        .transform-placeholder i { font-size: 40px; color: #444; }
+        .transform-card p { font-size: 13px; color: var(--gray); }
+
+        /* ============ COUNTERS ============ */
+        .counters {
+            display: grid; grid-template-columns: repeat(4, 1fr); gap: 30px;
+            padding: 60px 0; background: #0a0a0a;
+            border-top: 1px solid rgba(212,168,75,0.1);
+            border-bottom: 1px solid rgba(212,168,75,0.1);
+        }
+        .counter-item { text-align: center; }
+        .counter-number {
+            font-size: 48px; color: var(--gold);
+            font-family: 'Bebas Neue', sans-serif; letter-spacing: 2px;
+            margin-bottom: 5px;
+        }
+        .counter-label {
+            font-size: 14px; color: var(--gray);
+            font-weight: 600; text-transform: uppercase; letter-spacing: 1px;
+        }
+
+        /* ============ CONTACT ============ */
+        #contact { background: #111111; }
+        .contact-wrap { display: grid; grid-template-columns: 1fr 1fr; gap: 50px; align-items: start; }
+        .contact-form { background: #1a1a1a; border: 1px solid #222; border-radius: 8px; padding: 40px; }
+        .form-group { margin-bottom: 20px; }
+        .form-group label {
+            display: block; font-size: 13px; font-weight: 600;
+            color: var(--light-gray); margin-bottom: 8px;
+            text-transform: uppercase; letter-spacing: 1px;
+        }
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%; padding: 14px 16px;
+            background: #0a0a0a; border: 1px solid #222;
+            border-radius: 4px; color: var(--white);
+            font-family: 'Inter', sans-serif; font-size: 15px;
+            transition: border-color 0.3s ease;
+        }
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            outline: none; border-color: var(--red);
+        }
+        .form-group textarea { min-height: 120px; resize: vertical; }
+        .contact-info { padding-top: 20px; }
+        .contact-info h3 { font-size: 28px; color: var(--white); margin-bottom: 20px; }
+        .contact-info-item {
+            display: flex; align-items: center; gap: 12px;
+            margin-bottom: 18px; color: var(--gray);
+        }
+        .contact-info-item i {
+            width: 40px; height: 40px; border-radius: 50%;
+            background: rgba(212,168,75,0.1); color: var(--gold);
+            display: flex; align-items: center; justify-content: center;
+            font-size: 16px;
+        }
+        .form-success {
+            display: none; text-align: center; padding: 40px 20px;
+            color: var(--gold); font-size: 18px; font-weight: 600;
+        }
+        .form-success i { font-size: 50px; margin-bottom: 15px; display: block; }
+
+        /* ============ FOOTER ============ */
+        footer { background: #000; padding: 60px 0 20px; text-align: center; }
+        .footer-links { display: flex; gap: 25px; justify-content: center; flex-wrap: wrap; margin-bottom: 30px; }
+        .footer-links a {
+            font-size: 14px; color: var(--gray); text-transform: uppercase;
+            letter-spacing: 1px; transition: color 0.3s ease;
+        }
+        .footer-links a:hover { color: var(--red); }
+        .footer-divider { width: 60px; height: 2px; background: var(--red); margin: 0 auto 20px; }
+        .footer-copy { font-size: 13px; color: #555; }
+
+        /* ============ MODAL ============ */
+        .modal-overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.8); z-index: 99998;
+            display: flex; align-items: center; justify-content: center;
+            opacity: 0; visibility: hidden; transition: all 0.3s ease;
+        }
+        .modal-overlay.active { opacity: 1; visibility: visible; }
+        .modal {
+            background: #1a1a1a; border: 1px solid #333;
+            border-radius: 8px; padding: 50px 40px;
+            text-align: center; max-width: 450px; width: 90%;
+            transform: scale(0.9); transition: transform 0.3s ease;
+        }
+        .modal-overlay.active .modal { transform: scale(1); }
+        .modal .check-icon {
+            width: 70px; height: 70px; border-radius: 50%;
+            background: rgba(212,168,75,0.15);
+            display: flex; align-items: center; justify-content: center;
+            margin: 0 auto 20px;
+        }
+        .modal .check-icon i { font-size: 32px; color: var(--gold); }
+        .modal h2 { font-size: 28px; color: var(--white); margin-bottom: 12px; }
+        .modal p { font-size: 15px; color: var(--gray); line-height: 1.6; margin-bottom: 25px; }
+        .modal .btn-close { margin-top: 10px; }
+
+        /* ============ FLOATING BUTTONS ============ */
+        .whatsapp-float {
+            position: fixed; bottom: 80px; right: 25px;
+            width: 55px; height: 55px; border-radius: 50%;
+            background: var(--whatsapp); color: var(--white);
+            display: flex; align-items: center; justify-content: center;
+            font-size: 28px; z-index: 9999;
+            box-shadow: 0 4px 15px rgba(37, 211, 102, 0.4);
+            transition: all 0.3s ease;
+        }
+        .whatsapp-float:hover {
+            background: var(--whatsapp-hover);
+            transform: scale(1.1);
+            box-shadow: 0 6px 20px rgba(37, 211, 102, 0.5);
+        }
+        .back-to-top {
+            position: fixed; bottom: 150px; right: 28px;
+            width: 48px; height: 48px; border-radius: 50%;
+            background: var(--red); color: var(--white);
+            display: flex; align-items: center; justify-content: center;
+            font-size: 18px; z-index: 9998;
+            opacity: 0; visibility: hidden;
+            box-shadow: 0 4px 15px rgba(220, 38, 38, 0.3);
+            transition: all 0.3s ease;
+            cursor: pointer; border: none;
+        }
+        .back-to-top.visible { opacity: 1; visibility: visible; }
+        .back-to-top:hover { background: var(--red-hover); transform: scale(1.1); }
+
+        /* ============ RESPONSIVE ============ */
+        @media (max-width: 1024px) {
+            .exercise-grid { grid-template-columns: repeat(3, 1fr); }
+        }
+        @media (max-width: 900px) {
+            .package-cards { grid-template-columns: 1fr; max-width: 450px; margin: 0 auto; }
+            .package-card.popular { transform: none; }
+            .package-card.popular:hover { transform: translateY(-10px); }
+            .about-cards { grid-template-columns: 1fr; max-width: 450px; margin: 0 auto; }
+            .trainer-cards { grid-template-columns: 1fr; max-width: 400px; margin: 0 auto; }
+            .exercise-grid { grid-template-columns: repeat(2, 1fr); }
+            .contact-wrap { grid-template-columns: 1fr; }
+            .counters { grid-template-columns: repeat(2, 1fr); }
+        }
+        @media (max-width: 768px) {
+            .hamburger { display: flex; }
+            .nav-links {
+                position: fixed; top: 0; right: -100%;
+                width: 280px; height: 100vh;
+                background: rgba(10,10,10,0.98);
+                flex-direction: column; padding: 100px 30px 30px;
+                gap: 20px; transition: right 0.4s ease;
+            }
+            .nav-links.active { right: 0; }
+            .nav-links a { font-size: 16px; }
+            section { padding: 70px 0; }
+            .hero { min-height: 600px; }
+            .class-cards { grid-template-columns: 1fr; max-width: 450px; margin: 0 auto; }
+            .transform-cards { grid-template-columns: 1fr; }
+            .exercise-grid { grid-template-columns: 1fr; max-width: 400px; margin: 0 auto; }
+            .video-card { min-width: 260px; height: 180px; }
+            .gallery-item { min-width: 240px; height: 170px; }
+            .counters { grid-template-columns: 1fr 1fr; gap: 20px; }
+            .counter-number { font-size: 36px; }
+        }
+        @media (max-width: 480px) {
+            .hero-buttons { flex-direction: column; align-items: center; }
+            .btn { width: 100%; max-width: 280px; justify-content: center; }
+            .counters { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ============ LOADING SCREEN ============ -->
+    <div id="loading-screen">
+        <div class="spinner"></div>
+    </div>
+
+    <!-- ============ NAVBAR ============ -->
+    <nav class="navbar" id="navbar">
+        <div class="container">
+            <a href="#home" class="nav-logo">
+                <i class="fa-solid fa-dumbbell"></i>
+                POWER<span>FITNESS</span>
+            </a>
+            <button class="hamburger" id="hamburger" aria-label="Menu">
+                <span></span><span></span><span></span>
+            </button>
+            <ul class="nav-links" id="navLinks">
+                <li><a href="#home" class="active">Home</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a href="#packages">Packages</a></li>
+                <li><a href="#exercises">Exercises</a></li>
+                <li><a href="#classes">Classes</a></li>
+                <li><a href="#trainers">Trainers</a></li>
+                <li><a href="#gallery">Gallery</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- ============ HERO SECTION ============ -->
+    <section class="hero" id="home">
+        <div class="hero-video" style="background: linear-gradient(135deg, #0a0a0a 0%, #1a1010 30%, #0a0a0a 60%, #101015 100%);">
+            <!-- Placeholder: replace with <video autoplay muted loop playsinline class="hero-video" poster=""> -->
+            <!-- <source src="assets/videos/gym-background.mp4" type="video/mp4"> -->
+        </div>
+        <div class="hero-overlay"></div>
+        <div class="hero-content">
+            <div class="hero-badge reveal">🏆 Riyadh's Premier Fitness Destination</div>
+            <h1 class="hero-title reveal">
+                <span class="line1">TRANSFORM YOUR BODY</span>
+                <span class="line2">BUILD YOUR POWER</span>
+            </h1>
+            <p class="hero-subtitle reveal">
+                Join our modern fitness gym and start your journey toward strength, health, and confidence.
+            </p>
+            <div class="hero-buttons reveal">
+                <a href="#packages" class="btn btn-gold">Join Now <i class="fa-solid fa-arrow-right"></i></a>
+                <a href="#packages" class="btn btn-red">View Packages <i class="fa-solid fa-tag"></i></a>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============ TICKER ============ -->
+    <div class="ticker-wrap">
+        <div class="ticker" id="ticker">
+            <span>🔥 Strength Training</span><span>|</span>
+            <span>💪 Cardio Zone</span><span>|</span>
+            <span>🎯 Personal Trainer</span><span>|</span>
+            <span>⚡ Weight Loss Program</span><span>|</span>
+            <span>🏋️ Muscle Gain</span><span>|</span>
+            <span>📅 Fitness Classes</span><span>|</span>
+            <span>💎 Monthly Packages</span><span>|</span>
+            <span>🎁 Free Demo Session 🔥</span><span>|</span>
+            <span>🔥 Strength Training</span><span>|</span>
+            <span>💪 Cardio Zone</span><span>|</span>
+            <span>🎯 Personal Trainer</span><span>|</span>
+            <span>⚡ Weight Loss Program</span><span>|</span>
+            <span>🏋️ Muscle Gain</span><span>|</span>
+            <span>📅 Fitness Classes</span><span>|</span>
+            <span>💎 Monthly Packages</span><span>|</span>
+            <span>🎁 Free Demo Session 🔥</span>
+        </div>
+    </div>
+
+    <!-- ============ ABOUT SECTION ============ -->
+    <section id="about" class="bg-darker">
+        <div class="container">
+            <div class="section-header reveal">
+                <p class="section-tag">Who We Are</p>
+                <h2 class="section-title">About <span>Power Fitness</span> Gym</h2>
+                <div class="section-divider"></div>
+                <p class="section-desc">
+                    Power Fitness Gym is a modern training facility in the heart of Riyadh. We combine cutting-edge equipment,
+                    professional coaching, and a motivating atmosphere to help you achieve the best version of yourself.
+                    Whether you're a beginner or a seasoned athlete, we have the tools and expertise to fuel your transformation.
+                </p>
+            </div>
+            <div class="about-cards">
+                <div class="about-card reveal-left">
+                    <div class="icon-wrap"><i class="fa-solid fa-dumbbell"></i></div>
+                    <h3>Modern Equipment</h3>
+                    <p>State-of-the-art machines and free weights from leading global brands. Every piece of equipment is
+                    meticulously maintained for your safety and performance.</p>
+                </div>
+                <div class="about-card reveal-scale">
+                    <div class="icon-wrap"><i class="fa-solid fa-user-graduate"></i></div>
+                    <h3>Certified Trainers</h3>
+                    <p>Our internationally certified coaches bring years of experience and a passion for fitness. Every trainer
+                    is dedicated to your personal growth and results.</p>
+                </div>
+                <div class="about-card reveal-right">
+                    <div class="icon-wrap"><i class="fa-solid fa-trophy"></i></div>
+                    <h3>Result Focused Training</h3>
+                    <p>We don't just train — we transform. Every program is designed with measurable goals in mind, ensuring
+                    you see real progress in strength, endurance, and body composition.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============ MEMBERSHIP PACKAGES ============ -->
+    <section id="packages" class="bg-dark">
+        <div class="container">
+            <div class="section-header reveal">
+                <p class="section-tag">Choose Your Plan</p>
+                <h2 class="section-title">Membership <span>Plans</span></h2>
+                <div class="section-divider"></div>
+                <p class="section-desc">Flexible plans designed to fit your lifestyle and fitness goals. Start your transformation today.</p>
+            </div>
+            <div class="package-cards">
+                <!-- Basic -->
+                <div class="package-card reveal-left">
+                    <h3 class="package-name">Basic</h3>
+                    <div class="package-price">99 <span>SAR/month</span></div>
+                    <p class="package-desc">Great for getting started</p>
+                    <ul class="package-features">
+                        <li><i class="fa-solid fa-circle-check"></i> Gym Access</li>
+                        <li><i class="fa-solid fa-circle-check"></i> Cardio Area</li>
+                        <li><i class="fa-solid fa-circle-check"></i> Basic Workout Support</li>
+                        <li><i class="fa-solid fa-circle-check"></i> Free Locker</li>
+                    </ul>
+                    <button class="btn btn-red" onclick="openModal()">Join Now</button>
+                </div>
+                <!-- Standard -->
+                <div class="package-card popular reveal-scale">
+                    <div class="popular-badge">🔥 Most Popular</div>
+                    <h3 class="package-name">Standard</h3>
+                    <div class="package-price">149 <span>SAR/month</span></div>
+                    <p class="package-desc">Best value for serious training</p>
+                    <ul class="package-features">
+                        <li><i class="fa-solid fa-circle-check"></i> Full Gym Access</li>
+                        <li><i class="fa-solid fa-circle-check"></i> Cardio + Strength</li>
+                        <li><i class="fa-solid fa-circle-check"></i> Weekly Fitness Check</li>
+                        <li><i class="fa-solid fa-circle-check"></i> Trainer Guidance</li>
+                        <li><i class="fa-solid fa-circle-check"></i> Free Diet Tips</li>
+                    </ul>
+                    <button class="btn btn-gold" onclick="openModal()">Join Now</button>
+                </div>
+                <!-- Premium -->
+                <div class="package-card reveal-right">
+                    <h3 class="package-name">Premium</h3>
+                    <div class="package-price">249 <span>SAR/month</span></div>
+                    <p class="package-desc">Ultimate transformation experience</p>
+                    <ul class="package-features">
+                        <li><i class="fa-solid fa-circle-check"></i> Full Gym Access</li>
+                        <li><i class="fa-solid fa-circle-check"></i> Personal Trainer</li>
+                        <li><i class="fa-solid fa-circle-check"></i> Body Transformation Plan</li>
+                        <li><i class="fa-solid fa-circle-check"></i> Diet Plan</li>
+                        <li><i class="fa-solid fa-circle-check"></i> Progress Tracking</li>
+                        <li><i class="fa-solid fa-circle-check"></i> Priority Support</li>
+                    </ul>
+                    <button class="btn btn-red" onclick="openModal()">Join Now</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============ ANIMATED COUNTERS ============ -->
+    <div class="counters" id="counters">
+        <div class="container" style="display:contents;">
+            <div class="counter-item reveal">
+                <div class="counter-number" data-target="500">0</div>
+                <div class="counter-label">+ Members</div>
+            </div>
+            <div class="counter-item reveal">
+                <div class="counter-number" data-target="20">0</div>
+                <div class="counter-label">+ Trainers</div>
+            </div>
+            <div class="counter-item reveal">
+                <div class="counter-number" data-target="50">0</div>
+                <div class="counter-label">+ Machines</div>
+            </div>
+            <div class="counter-item reveal">
+                <div class="counter-number" data-target="10">0</div>
+                <div class="counter-label">+ Fitness Programs</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ============ EXERCISE CATEGORIES ============ -->
+    <section id="exercises" class="bg-darker">
+        <div class="container">
+            <div class="section-header reveal">
+                <p class="section-tag">What We Offer</p>
+                <h2 class="section-title">Exercise <span>Categories</span></h2>
+                <div class="section-divider"></div>
+                <p class="section-desc">Explore our wide range of training programs designed for every fitness level and goal.</p>
+            </div>
+            <div class="exercise-grid">
+                <div class="exercise-card reveal">
+                    <div class="ex-icon"><i class="fa-solid fa-dumbbell"></i></div>
+                    <h3>Strength Training</h3>
+                    <p>Build muscle and increase power with weight lifting and resistance workouts.</p>
+                    <span class="ex-link">Explore <i class="fa-solid fa-arrow-right"></i></span>
+                </div>
+                <div class="exercise-card reveal">
+                    <div class="ex-icon"><i class="fa-solid fa-heart-pulse"></i></div>
+                    <h3>Cardio Training</h3>
+                    <p>Improve stamina, burn calories, and strengthen your heart.</p>
+                    <span class="ex-link">Explore <i class="fa-solid fa-arrow-right"></i></span>
+                </div>
+                <div class="exercise-card reveal">
+                    <div class="ex-icon"><i class="fa-solid fa-weight-scale"></i></div>
+                    <h3>Weight Loss Program</h3>
+                    <p>Special workout plans designed to reduce fat and improve body shape.</p>
+                    <span class="ex-link">Explore <i class="fa-solid fa-arrow-right"></i></span>
+                </div>
+                <div class="exercise-card reveal">
+                    <div class="ex-icon"><i class="fa-solid fa-person-military-pointing"></i></div>
+                    <h3>Muscle Gain Program</h3>
+                    <p>Focused training for muscle growth, strength, and better body structure.</p>
+                    <span class="ex-link">Explore <i class="fa-solid fa-arrow-right"></i></span>
+                </div>
+                <div class="exercise-card reveal">
+                    <div class="ex-icon"><i class="fa-solid fa-bolt"></i></div>
+                    <h3>HIIT Workout</h3>
+                    <p>High intensity workout sessions for fast fat burning and fitness improvement.</p>
+                    <span class="ex-link">Explore <i class="fa-solid fa-arrow-right"></i></span>
+                </div>
+                <div class="exercise-card reveal">
+                    <div class="ex-icon"><i class="fa-solid fa-hand-fist"></i></div>
+                    <h3>Boxing Fitness</h3>
+                    <p>Improve speed, power, stamina, and confidence with boxing workouts.</p>
+                    <span class="ex-link">Explore <i class="fa-solid fa-arrow-right"></i></span>
+                </div>
+                <div class="exercise-card reveal">
+                    <div class="ex-icon"><i class="fa-solid fa-person-running"></i></div>
+                    <h3>CrossFit Training</h3>
+                    <p>Functional training for full body strength and endurance.</p>
+                    <span class="ex-link">Explore <i class="fa-solid fa-arrow-right"></i></span>
+                </div>
+                <div class="exercise-card reveal">
+                    <div class="ex-icon"><i class="fa-solid fa-spa"></i></div>
+                    <h3>Yoga & Stretching</h3>
+                    <p>Improve flexibility, balance, recovery, and mental relaxation.</p>
+                    <span class="ex-link">Explore <i class="fa-solid fa-arrow-right"></i></span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============ CLASSES SCHEDULE ============ -->
+    <section id="classes" class="bg-dark">
+        <div class="container">
+            <div class="section-header reveal">
+                <p class="section-tag">Your Routine</p>
+                <h2 class="section-title">Classes <span>Schedule</span></h2>
+                <div class="section-divider"></div>
+                <p class="section-desc">Structured classes throughout the day to fit your schedule. Show up and let us guide you.</p>
+            </div>
+            <div class="class-cards">
+                <div class="class-card reveal-left">
+                    <div class="class-time">6:00 AM</div>
+                    <h3 class="class-name">Morning Cardio</h3>
+                    <p class="class-desc">Kickstart your day with high-energy cardio. Burn calories and boost your metabolism for the day ahead.</p>
+                </div>
+                <div class="class-card reveal">
+                    <div class="class-time">8:00 AM</div>
+                    <h3 class="class-name">Strength Training</h3>
+                    <p class="class-desc">Build lean muscle with guided resistance training. Focus on compound lifts and proper form.</p>
+                </div>
+                <div class="class-card reveal">
+                    <div class="class-time">5:00 PM</div>
+                    <h3 class="class-name">Weight Loss Batch</h3>
+                    <p class="class-desc">After-work session focused on fat burning, core work, and full-body conditioning.</p>
+                </div>
+                <div class="class-card reveal-right">
+                    <div class="class-time">7:00 PM</div>
+                    <h3 class="class-name">HIIT Workout</h3>
+                    <p class="class-desc">Evening high-intensity intervals. Push your limits with circuits that torch calories fast.</p>
+                </div>
+                <div class="class-card booking reveal">
+                    <div class="class-time">📅 Available on Booking</div>
+                    <h3 class="class-name">Personal Training</h3>
+                    <p class="class-desc">One-on-one sessions tailored to your goals. Flexible timing — book your slot in advance.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============ TRAINERS ============ -->
+    <section id="trainers" class="bg-darker">
+        <div class="container">
+            <div class="section-header reveal">
+                <p class="section-tag">Meet The Team</p>
+                <h2 class="section-title">Our <span>Trainers</span></h2>
+                <div class="section-divider"></div>
+                <p class="section-desc">Expert coaches dedicated to your success. Each brings specialized knowledge and a passion for fitness.</p>
+            </div>
+            <div class="trainer-cards">
+                <div class="trainer-card reveal-left">
+                    <div class="trainer-avatar"><i class="fa-solid fa-user"></i></div>
+                    <h3>Coach Ahmed</h3>
+                    <p class="trainer-specialty">Muscle Gain & Strength Training</p>
+                    <p class="trainer-exp">⭐ 5+ Years Experience</p>
+                    <button class="btn btn-outline" onclick="openModal()">Contact</button>
+                </div>
+                <div class="trainer-card reveal-scale">
+                    <div class="trainer-avatar"><i class="fa-solid fa-user"></i></div>
+                    <h3>Coach Salman</h3>
+                    <p class="trainer-specialty">Weight Loss & Cardio</p>
+                    <p class="trainer-exp">⭐ 5+ Years Experience</p>
+                    <button class="btn btn-outline" onclick="openModal()">Contact</button>
+                </div>
+                <div class="trainer-card reveal-right">
+                    <div class="trainer-avatar"><i class="fa-solid fa-user"></i></div>
+                    <h3>Coach Hamza</h3>
+                    <p class="trainer-specialty">Personal Training & Body Transformation</p>
+                    <p class="trainer-exp">⭐ 5+ Years Experience</p>
+                    <button class="btn btn-outline" onclick="openModal()">Contact</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============ VIDEO SCROLLING ============ -->
+    <section id="videos" class="bg-dark">
+        <div class="container">
+            <div class="section-header reveal">
+                <p class="section-tag">Watch & Learn</p>
+                <h2 class="section-title">Training <span>Videos</span></h2>
+                <div class="section-divider"></div>
+            </div>
+        </div>
+        <div class="video-scroll-wrap">
+            <div class="video-scroll">
+                <div class="video-card reveal-left">
+                    <div class="video-placeholder">
+                        <div class="play-icon"><i class="fa-solid fa-play"></i></div>
+                        <p>Gym Workout</p>
+                    </div>
+                </div>
+                <div class="video-card reveal">
+                    <div class="video-placeholder">
+                        <div class="play-icon"><i class="fa-solid fa-play"></i></div>
+                        <p>Cardio Session</p>
+                    </div>
+                </div>
+                <div class="video-card reveal">
+                    <div class="video-placeholder">
+                        <div class="play-icon"><i class="fa-solid fa-play"></i></div>
+                        <p>Personal Training</p>
+                    </div>
+                </div>
+                <div class="video-card reveal-right">
+                    <div class="video-placeholder">
+                        <div class="play-icon"><i class="fa-solid fa-play"></i></div>
+                        <p>Body Transformation</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============ PICTURE GALLERY ============ -->
+    <section id="gallery" class="bg-darker">
+        <div class="container">
+            <div class="section-header reveal">
+                <p class="section-tag">Inside Look</p>
+                <h2 class="section-title">Picture <span>Gallery</span></h2>
+                <div class="section-divider"></div>
+                <p class="section-desc">Take a tour of our facility. Modern, clean, and built for serious training.</p>
+            </div>
+        </div>
+        <div class="gallery-scroll-wrap">
+            <div class="gallery-scroll">
+                <div class="gallery-item gallery-bg-1 reveal-left">
+                    <span class="gallery-label">Gym Interior</span>
+                </div>
+                <div class="gallery-item gallery-bg-2 reveal">
+                    <span class="gallery-label">Workout Area</span>
+                </div>
+                <div class="gallery-item gallery-bg-3 reveal">
+                    <span class="gallery-label">Dumbbell Zone</span>
+                </div>
+                <div class="gallery-item gallery-bg-4 reveal">
+                    <span class="gallery-label">Cardio Machines</span>
+                </div>
+                <div class="gallery-item gallery-bg-5 reveal">
+                    <span class="gallery-label">Trainer Session</span>
+                </div>
+                <div class="gallery-item gallery-bg-6 reveal-right">
+                    <span class="gallery-label">Transformation Results</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============ TRANSFORMATION SECTION ============ -->
+    <section id="transformation" class="bg-dark">
+        <div class="container">
+            <div class="transform-content reveal">
+                <h2 class="transform-title">Start Your <span>Transformation</span> Today</h2>
+                <p class="transform-text">
+                    Every great physique started with a single decision. Don't wait for Monday — your journey begins the moment
+                    you commit. Our proven programs, expert coaches, and supportive community are ready to help you achieve
+                    results you never thought possible.
+                </p>
+                <a href="#packages" class="btn btn-gold" style="margin-top:10px;">Get Started Now <i class="fa-solid fa-arrow-right"></i></a>
+            </div>
+            <div class="transform-cards">
+                <div class="transform-card reveal-left">
+                    <span class="transform-badge before">Before</span>
+                    <div class="transform-placeholder"><i class="fa-solid fa-image"></i></div>
+                    <p>Starting point — Day 1 of your fitness journey</p>
+                </div>
+                <div class="transform-card reveal-right">
+                    <span class="transform-badge after">After</span>
+                    <div class="transform-placeholder"><i class="fa-solid fa-image"></i></div>
+                    <p>Your transformation — results powered by consistency</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============ CONTACT SECTION ============ -->
+    <section id="contact" class="bg-darker">
+        <div class="container">
+            <div class="section-header reveal">
+                <p class="section-tag">Get In Touch</p>
+                <h2 class="section-title">Contact <span>Us</span></h2>
+                <div class="section-divider"></div>
+                <p class="section-desc">Ready to start? Reach out and we'll help you choose the right plan.</p>
+            </div>
+            <div class="contact-wrap">
+                <div class="contact-form reveal-left" id="contactFormWrap">
+                    <form id="contactForm" onsubmit="handleContactSubmit(event)">
+                        <div class="form-group">
+                            <label for="name">Full Name</label>
+                            <input type="text" id="name" placeholder="Enter your full name" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="phone">Phone Number</label>
+                            <input type="tel" id="phone" placeholder="05XXXXXXXX" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="package">Interested Package</label>
+                            <select id="package" required>
+                                <option value="">Select a package</option>
+                                <option value="Basic">Basic — 99 SAR/month</option>
+                                <option value="Standard">Standard — 149 SAR/month</option>
+                                <option value="Premium">Premium — 249 SAR/month</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="message">Message</label>
+                            <textarea id="message" placeholder="Tell us about your fitness goals..." required></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-red" style="width:100%;justify-content:center;">Submit <i class="fa-solid fa-paper-plane"></i></button>
+                    </form>
+                    <div class="form-success" id="formSuccess">
+                        <i class="fa-solid fa-circle-check"></i>
+                        <p>Thank you! Your message has been received. We'll contact you shortly.</p>
+                    </div>
+                </div>
+                <div class="contact-info reveal-right">
+                    <h3>Reach Out To Us</h3>
+                    <div class="contact-info-item">
+                        <i class="fa-solid fa-phone"></i>
+                        <div>
+                            <p style="color:#fff;font-weight:600;">Phone</p>
+                            <p>05XXXXXXXX</p>
+                        </div>
+                    </div>
+                    <div class="contact-info-item">
+                        <i class="fa-solid fa-location-dot"></i>
+                        <div>
+                            <p style="color:#fff;font-weight:600;">Location</p>
+                            <p>Riyadh, Saudi Arabia</p>
+                        </div>
+                    </div>
+                    <div class="contact-info-item">
+                        <i class="fa-solid fa-clock"></i>
+                        <div>
+                            <p style="color:#fff;font-weight:600;">Working Hours</p>
+                            <p>6:00 AM — 11:00 PM Daily</p>
+                        </div>
+                    </div>
+                    <div class="contact-info-item">
+                        <i class="fa-solid fa-envelope"></i>
+                        <div>
+                            <p style="color:#fff;font-weight:600;">Email</p>
+                            <p>info@powerfitness.sa</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============ FOOTER ============ -->
+    <footer>
+        <div class="container">
+            <div class="footer-links">
+                <a href="#home">Home</a>
+                <a href="#about">About</a>
+                <a href="#packages">Packages</a>
+                <a href="#exercises">Exercises</a>
+                <a href="#gallery">Gallery</a>
+                <a href="#contact">Contact</a>
+            </div>
+            <div class="footer-divider"></div>
+            <p class="footer-copy">&copy; 2026 Power Fitness Gym. All Rights Reserved.</p>
+        </div>
+    </footer>
+
+    <!-- ============ MODAL ============ -->
+    <div class="modal-overlay" id="modalOverlay" onclick="closeModal(event)">
+        <div class="modal" onclick="event.stopPropagation()">
+            <div class="check-icon"><i class="fa-solid fa-circle-check"></i></div>
+            <h2>Thank You!</h2>
+            <p>This is a demo subscription.<br>Please contact gym management to activate your plan.</p>
+            <button class="btn btn-red btn-close" onclick="closeModal()">Close</button>
+        </div>
+    </div>
+
+    <!-- ============ FLOATING BUTTONS ============ -->
+    <a href="https://wa.me/966XXXXXXXXX" class="whatsapp-float" target="_blank" rel="noopener" aria-label="Chat on WhatsApp">
+        <i class="fa-brands fa-whatsapp"></i>
+    </a>
+    <button class="back-to-top" id="backToTop" aria-label="Back to top" onclick="window.scrollTo({top:0,behavior:'smooth'})">
+        <i class="fa-solid fa-chevron-up"></i>
+    </button>
+
+    <!-- ============ SCRIPTS ============ -->
+    <script>
+        (function() {
+            // --- Loading Screen ---
+            window.addEventListener('load', function() {
+                setTimeout(function() {
+                    document.getElementById('loading-screen').classList.add('hidden');
+                }, 1500);
+            });
+
+            // --- Navbar Scroll ---
+            const navbar = document.getElementById('navbar');
+            const backToTop = document.getElementById('backToTop');
+            window.addEventListener('scroll', function() {
+                const scrollY = window.scrollY;
+                if (scrollY > 60) {
+                    navbar.classList.add('scrolled');
+                    backToTop.classList.add('visible');
+                } else {
+                    navbar.classList.remove('scrolled');
+                    backToTop.classList.remove('visible');
+                }
+            });
+
+            // --- Hamburger Menu ---
+            const hamburger = document.getElementById('hamburger');
+            const navLinks = document.getElementById('navLinks');
+            hamburger.addEventListener('click', function() {
+                hamburger.classList.toggle('active');
+                navLinks.classList.toggle('active');
+            });
+            // Close nav on link click (mobile)
+            document.querySelectorAll('.nav-links a').forEach(function(link) {
+                link.addEventListener('click', function() {
+                    hamburger.classList.remove('active');
+                    navLinks.classList.remove('active');
+                });
+            });
+
+            // --- Active nav link on scroll ---
+            const sections = document.querySelectorAll('section[id]');
+            const navAnchors = document.querySelectorAll('.nav-links a');
+            window.addEventListener('scroll', function() {
+                let current = '';
+                sections.forEach(function(section) {
+                    const top = section.offsetTop - 100;
+                    if (window.scrollY >= top) {
+                        current = section.getAttribute('id');
+                    }
+                });
+                navAnchors.forEach(function(a) {
+                    a.classList.remove('active');
+                    if (a.getAttribute('href') === '#' + current) {
+                        a.classList.add('active');
+                    }
+                });
+            });
+
+            // --- Scroll Reveal (Intersection Observer) ---
+            const revealElements = document.querySelectorAll('.reveal, .reveal-left, .reveal-right, .reveal-scale');
+            const revealObserver = new IntersectionObserver(function(entries) {
+                entries.forEach(function(entry) {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                        revealObserver.unobserve(entry.target);
+                    }
+                });
+            }, {
+                threshold: 0.15,
+                rootMargin: '0px 0px -50px 0px'
+            });
+            revealElements.forEach(function(el) { revealObserver.observe(el); });
+
+            // --- Animated Counters ---
+            const counterItems = document.querySelectorAll('.counter-number');
+            let countersAnimated = false;
+            const counterObserver = new IntersectionObserver(function(entries) {
+                entries.forEach(function(entry) {
+                    if (entry.isIntersecting && !countersAnimated) {
+                        countersAnimated = true;
+                        counterItems.forEach(function(counter) {
+                            const target = parseInt(counter.getAttribute('data-target'));
+                            const duration = 2000;
+                            const step = target / (duration / 20);
+                            let current = 0;
+                            const timer = setInterval(function() {
+                                current += step;
+                                if (current >= target) {
+                                    counter.textContent = target;
+                                    clearInterval(timer);
+                                } else {
+                                    counter.textContent = Math.floor(current);
+                                }
+                            }, 20);
+                        });
+                        counterObserver.unobserve(entry.target);
+                    }
+                });
+            }, { threshold: 0.5 });
+            const countersSection = document.getElementById('counters');
+            if (countersSection) counterObserver.observe(countersSection);
+
+            // --- Modal ---
+            window.openModal = function() {
+                document.getElementById('modalOverlay').classList.add('active');
+                document.body.style.overflow = 'hidden';
+            };
+            window.closeModal = function(e) {
+                if (e && e.target !== document.getElementById('modalOverlay')) return;
+                document.getElementById('modalOverlay').classList.remove('active');
+                document.body.style.overflow = '';
+            };
+            // Close modal with Escape key
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'Escape') {
+                    document.getElementById('modalOverlay').classList.remove('active');
+                    document.body.style.overflow = '';
+                }
+            });
+
+            // --- Contact Form ---
+            window.handleContactSubmit = function(e) {
+                e.preventDefault();
+                document.getElementById('contactForm').style.display = 'none';
+                document.getElementById('formSuccess').style.display = 'block';
+            };
+
+            // --- Duplicate ticker content for seamless loop ---
+            // Already done in HTML with duplicated content
+
+            console.log('Power Fitness Gym — All systems ready.');
+        })();
+    </script>
+
+</body>
+</html>
