@@ -199,10 +199,11 @@
 
         /* ============ TICKER ============ */
         .ticker-wrap {
-            position: relative; z-index: 3;
-            background: rgba(10,10,10,0.9); border-top: 1px solid rgba(212,168,75,0.2);
-            border-bottom: 1px solid rgba(212,168,75,0.2);
-            overflow: hidden; padding: 12px 0;
+            position: absolute; bottom: 0; left: 0; width: 100%; z-index: 3;
+            background: rgba(10,10,10,0.75); 
+            border-top: 1px solid rgba(212,168,75,0.3);
+            border-bottom: 1px solid rgba(212,168,75,0.3);
+            overflow: hidden; padding: 14px 0;
         }
         .ticker {
             display: flex; gap: 0; white-space: nowrap;
@@ -704,10 +705,7 @@
 
     <!-- ============ HERO SECTION ============ -->
     <section class="hero" id="home">
-        <div class="hero-video" style="background: linear-gradient(135deg, #0a0a0a 0%, #1a1010 30%, #0a0a0a 60%, #101015 100%);">
-            <!-- Placeholder: replace with <video autoplay muted loop playsinline class="hero-video" poster=""> -->
-            <!-- <source src="assets/videos/gym-background.mp4" type="video/mp4"> -->
-        </div>
+        <div class="hero-video" style="background: url('assets/images/hero-bg.jpg') center/cover no-repeat;"></div>
         <div class="hero-overlay"></div>
         <div class="hero-content">
             <div class="hero-badge reveal">🏆 Riyadh's Premier Fitness Destination</div>
@@ -723,10 +721,8 @@
                 <a href="#packages" class="btn btn-red">View Packages <i class="fa-solid fa-tag"></i></a>
             </div>
         </div>
-    </section>
-
-    <!-- ============ TICKER ============ -->
-    <div class="ticker-wrap">
+        <!-- ============ TICKER ============ -->
+        <div class="ticker-wrap">
         <div class="ticker" id="ticker">
             <span>🔥 Strength Training</span><span>|</span>
             <span>💪 Cardio Zone</span><span>|</span>
@@ -746,8 +742,9 @@
             <span>🎁 Free Demo Session 🔥</span>
         </div>
     </div>
+</section>
 
-    <!-- ============ ABOUT SECTION ============ -->
+<!-- ============ ABOUT SECTION ============ -->
     <section id="about" class="bg-darker">
         <div class="container">
             <div class="section-header reveal">
