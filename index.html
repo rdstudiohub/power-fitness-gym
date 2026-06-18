@@ -460,9 +460,9 @@
         .gallery-scroll-wrap::-webkit-scrollbar-thumb { background: var(--gold); border-radius: 3px; }
         .gallery-scroll { display: flex; gap: 20px; padding: 0 60px; }
         .gallery-item {
-            scroll-snap-align: center; min-width: 300px; width: 300px;
-            height: 220px; border-radius: 12px;
-            display: flex; align-items: flex-end; padding: 20px;
+            scroll-snap-align: center; min-width: 320px; width: 320px;
+            height: 350px; border-radius: 16px;
+            display: flex; align-items: flex-end; padding: 24px;
             position: relative; overflow: hidden; flex-shrink: 0;
             cursor: pointer; transition: all 0.3s ease;
             background-size: cover; background-position: center;
@@ -491,7 +491,7 @@
         .gallery-bg-5 { background: linear-gradient(135deg, #2d2d1a, #1a1a1a); }
         .gallery-bg-6 { background: linear-gradient(135deg, #1a1a2d, #2d1a1a); }
         @media (max-width: 768px) {
-            .gallery-item { min-width: 260px; width: 260px; height: 190px; }
+            .gallery-item { min-width: 280px; width: 280px; height: 300px; }
             .gallery-scroll { padding: 0 50px; }
             .gallery-arrow { width: 36px; height: 36px; font-size: 14px; }
         }
@@ -772,6 +772,44 @@
         </div>
     </div>
 </section>
+
+<!-- ============ GALLERY SECTION (MOVED TO TOP) ============ -->
+    <section id="gallery" class="bg-darker">
+        <div class="container">
+            <div class="section-header reveal">
+                <p class="section-tag">Inside Look</p>
+                <h2 class="section-title">Picture <span>Gallery</span></h2>
+                <div class="section-divider"></div>
+                <p class="section-desc">Take a tour of our facility. Modern, clean, and built for serious training.</p>
+            </div>
+        </div>
+        <div class="gallery-container">
+            <button class="gallery-arrow gallery-arrow-left" onclick="scrollGallery(-1)" aria-label="Previous"><i class="fa-solid fa-chevron-left"></i></button>
+            <button class="gallery-arrow gallery-arrow-right" onclick="scrollGallery(1)" aria-label="Next"><i class="fa-solid fa-chevron-right"></i></button>
+            <div class="gallery-scroll-wrap" id="galleryScroll">
+            <div class="gallery-scroll">
+                <div class="gallery-item gallery-bg-1 reveal-left">
+                    <span class="gallery-label">Training Session</span>
+                </div>
+                <div class="gallery-item gallery-bg-2 reveal">
+                    <span class="gallery-label">Workout Area</span>
+                </div>
+                <div class="gallery-item gallery-bg-3 reveal">
+                    <span class="gallery-label">Dumbbell Zone</span>
+                </div>
+                <div class="gallery-item gallery-bg-4 reveal">
+                    <span class="gallery-label">Cardio Machines</span>
+                </div>
+                <div class="gallery-item gallery-bg-5 reveal">
+                    <span class="gallery-label">Trainer Session</span>
+                </div>
+                <div class="gallery-item gallery-bg-6 reveal-right">
+                    <span class="gallery-label">Transformation Results</span>
+                </div>
+            </div>
+            </div>
+        </div>
+    </section>
 
 <!-- ============ ABOUT SECTION ============ -->
     <section id="about" class="bg-darker">
@@ -1059,44 +1097,6 @@
                         <p>Body Transformation</p>
                     </div>
                 </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- ============ PICTURE GALLERY ============ -->
-    <section id="gallery" class="bg-darker">
-        <div class="container">
-            <div class="section-header reveal">
-                <p class="section-tag">Inside Look</p>
-                <h2 class="section-title">Picture <span>Gallery</span></h2>
-                <div class="section-divider"></div>
-                <p class="section-desc">Take a tour of our facility. Modern, clean, and built for serious training.</p>
-            </div>
-        </div>
-        <div class="gallery-container">
-            <button class="gallery-arrow gallery-arrow-left" onclick="scrollGallery(-1)" aria-label="Previous"><i class="fa-solid fa-chevron-left"></i></button>
-            <button class="gallery-arrow gallery-arrow-right" onclick="scrollGallery(1)" aria-label="Next"><i class="fa-solid fa-chevron-right"></i></button>
-            <div class="gallery-scroll-wrap" id="galleryScroll">
-            <div class="gallery-scroll">
-                <div class="gallery-item gallery-bg-1 reveal-left">
-                    <span class="gallery-label">Training Session</span>
-                </div>
-                <div class="gallery-item gallery-bg-2 reveal">
-                    <span class="gallery-label">Workout Area</span>
-                </div>
-                <div class="gallery-item gallery-bg-3 reveal">
-                    <span class="gallery-label">Dumbbell Zone</span>
-                </div>
-                <div class="gallery-item gallery-bg-4 reveal">
-                    <span class="gallery-label">Cardio Machines</span>
-                </div>
-                <div class="gallery-item gallery-bg-5 reveal">
-                    <span class="gallery-label">Trainer Session</span>
-                </div>
-                <div class="gallery-item gallery-bg-6 reveal-right">
-                    <span class="gallery-label">Transformation Results</span>
-                </div>
-            </div>
             </div>
         </div>
     </section>
