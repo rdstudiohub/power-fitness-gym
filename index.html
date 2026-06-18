@@ -271,6 +271,18 @@
         .about-card p {
             font-size: 14px; color: var(--gray); line-height: 1.6;
         }
+        .about-card-img {
+            position: relative; overflow: hidden; border-top-color: var(--red) !important;
+            background-size: cover; background-position: center;
+        }
+        .about-card-img::before {
+            content: ''; position: absolute; inset: 0;
+            background: rgba(10,10,10,0.82); z-index: 1;
+        }
+        .about-card-img .icon-wrap,
+        .about-card-img h3,
+        .about-card-img p { position: relative; z-index: 2; }
+        .about-card-img h3 { color: var(--gold); }
 
         /* ============ PACKAGES ============ */
         #packages { background: #0a0a0a; }
@@ -775,7 +787,7 @@
                 </p>
             </div>
             <div class="about-cards">
-                <div class="about-card reveal-left">
+                <div class="about-card about-card-img reveal-left" style="background-image: url('assets/images/about-equipment.jpg');">
                     <div class="icon-wrap"><i class="fa-solid fa-dumbbell"></i></div>
                     <h3>Modern Equipment</h3>
                     <p>State-of-the-art machines and free weights from leading global brands. Every piece of equipment is
